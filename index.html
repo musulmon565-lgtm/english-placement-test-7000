@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>English Placement Test</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .input-box {
+            margin-bottom: 20px;
+        }
+
+        .input-box label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #667eea;
+        }
+
+        .start-btn,
+        .next-btn {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #667eea;
+            color: white;
+            transition: 0.2s;
+        }
+
+        .start-btn:hover,
+        .next-btn:hover {
+            transform: translateY(-2px);
+            background: #5568d9;
+        }
+
+        #test {
+            margin-top: 10px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #667eea;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        #question {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            white-space: pre-line;
+        }
+
+        #answers {
+            margin-bottom: 25px;
+        }
+
+        .answer-btn {
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 2px solid #e2e2e2;
+            border-radius: 10px;
+            background: white;
+            text-align: left;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .answer-btn:hover {
+            border-color: #667eea;
+            background: #f5f6ff;
+        }
+
+        .answer-btn.selected {
+            border-color: #667eea;
+            background: #eef0ff;
+            font-weight: bold;
+        }
+
+        /* NEXT + SKIP BUTTONS */
+
+        .test-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .skip-btn {
+            width: 100%;
+            border: 2px solid #667eea;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            background: white;
+            color: #667eea;
+            transition: 0.2s;
+        }
+
+        .skip-btn:hover {
+            background: #eef0ff;
+            transform: translateY(-2px);
+        }
+
+        /* RESULT */
+
+        #result {
+            text-align: center;
+        }
+
+        .result-card {
+            text-align: center;
+            padding: 10px 5px;
+        }
+
+        .result-icon {
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #eef0ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+        }
+
+        .result-card h2 {
+            font-size: 32px;
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        .result-subtitle {
+            color: #888;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        .student-result {
+            font-size: 21px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            background: #f7f8ff;
+            border: 1px solid #e8eaff;
+            border-radius: 15px;
+            padding: 18px 10px;
+        }
+
+        .stat-label {
+            display: block;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .score-number,
+        .percentage {
+            font-size: 30px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 0;
+        }
+
+        .level-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .level-label {
+            font-size: 13px;
+            opacity: 0.85;
+            margin-bottom: 5px;
+        }
+
+        .level-badge {
+            display: block;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .level-message {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #666;
+            margin: 0 auto 25px;
+            max-width: 500px;
+        }
+
+        .restart-btn {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #667eea;
+            color: white;
+            transition: 0.2s;
+        }
+
+        .restart-btn:hover {
+            background: #5568d9;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+
+            .card {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            #question {
+                font-size: 20px;
+            }
+
+            .result-card h2 {
+                font-size: 26px;
+            }
+
+            .result-stats {
+                gap: 10px;
+            }
+
+            .stat-box {
+                padding: 15px 8px;
+            }
+
+            .test-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <!-- START -->
+
+        <div id="start">
+
+            <h1>English Placement Test</h1>
+
+            <p class="subtitle">
+                Find out your English level
+            </p>
+
+            <div class="input-box">
+
+                <label for="studentName">
+                    Student name
+                </label>
+
+                <input
+                    type="text"
+                    id="studentName"
+                    placeholder="Enter your name"
+                >
+
+            </div>
+
+            <button
+                class="start-btn"
+                onclick="startTest()">
+                START TEST
+            </button>
+
+        </div>
+
+
+        <!-- TEST -->
+
+        <div id="test" style="display:none;">
+
+            <div class="top">
+
+                <span id="progress">
+                    Question 1 of 70
+                </span>
+
+                <span>
+                    English
+                </span>
+
+            </div>
+
+            <div class="progress-container">
+
+                <div
+                    class="progress-bar"
+                    id="progressBar">
+                </div>
+
+            </div>
+
+            <h2 id="question"></h2>
+
+            <div id="answers"></div>
+
+            <div class="test-buttons">
+
+                <button
+                    class="skip-btn"
+                    onclick="skipQuestion()">
+                    SKIP →
+                </button>
+
+                <button
+                    class="next-btn"
+                    onclick="nextQuestion()">
+                    NEXT →
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div id="result" style="display:none;"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const questions = [
+
+    {
+        question: "Manager: Where’s Mr Davidson?\nAssistant: Oh, he’s _____ London today.",
+        answers: ["in", "on", "to", "at"],
+        correct: 0
+    },
+
+    {
+        question: "Amirah: Do you like cats?\nChris: No, but there _____ lots of other animals I like.",
+        answers: ["is", "be", "are", "was"],
+        correct: 2
+    },
+
+    {
+        question: "Andrew: Where _____ Alicia come from?\nMartin: I think she’s from the United States.",
+        answers: ["is", "do", "are", "does"],
+        correct: 3
+    },
+
+    {
+        question: "Teacher: Tell me something about your parents, Lucas.\nStudent: My mother and father both _____ very tall.",
+        answers: ["is", "isn’t", "are", "aren’t"],
+        correct: 2
+    },
+
+    {
+        question: "Ayla: That’s a nice table, Sophie! Is it new?\nSophie: Oh no, it’s my old _____ dining table.",
+        answers: ["mother", "mothers", "mother’s", "mothers’"],
+        correct: 2
+    },
+
+    {
+        question: "Emma: What do you do after school?\nChloe: I see my friends. Do you visit people, too?\nEmma: No, I _____ go out.",
+        answers: ["often", "never", "always", "sometimes"],
+        correct: 1
+    },
+
+    {
+        question: "Katie: Is Charlotte at school today?\nLaura: No, she _____. She’s not well today.",
+        answers: ["isn’t", "aren’t", "doesn’t", "hasn’t"],
+        correct: 0
+    },
+
+    {
+        question: "Alex: I’d like to make a cake. _____ eggs have we got?\nAndrea: Three, I think. Let me check.",
+        answers: ["How big", "How much", "How many", "How long"],
+        correct: 2
+    },
+
+    {
+        question: "Ifrah: Which bus goes to the hospital?\nAntonia: _____ the 236. It stops outside.",
+        answers: ["Get", "Got", "Gets", "Getting"],
+        correct: 0
+    },
+
+    {
+        question: "Father: Are we ready to go?\nDaughter: No, Mum can’t find _____ hat.",
+        answers: ["its", "his", "her", "their"],
+        correct: 2
+    },
+
+    {
+        question: "Shop Assistant: Can I help you?\nCustomer: Yes, I’d like to buy _____ trousers.",
+        answers: ["a", "an", "this", "these"],
+        correct: 3
+    },
+
+    {
+        question: "Mother: Where’s that fish I bought? It was on the table.\nDaughter: Oh no! The cat _____ it.",
+        answers: ["eat", "eats", "is eating", "are eating"],
+        correct: 2
+    },
+
+    {
+        question: "Amanda: I like your new sofa.\nFahima: Thanks. It’s _____ comfortable than the other one we had.",
+        answers: ["too", "very", "much", "more"],
+        correct: 3
+    },
+
+    {
+        question: "Alicia: I’m going to the supermarket. Do you want anything?\nPeter: Could you get _____ milk, please?",
+        answers: ["a", "any", "some", "every"],
+        correct: 2
+    },
+
+    {
+        question: "Karina: When do you want to play football?\nAniqa: I _____ to play tomorrow, because I don’t need to go to work.",
+        answers: ["like", "likes", "liked", "’d like"],
+        correct: 3
+    },
+
+    {
+        question: "Manisha: What did you do at the weekend?\nNicola: I _____ tennis with my friend on Saturday.",
+        answers: ["play", "played", "plays", "playing"],
+        correct: 1
+    },
+
+    {
+        question: "Wife: Have we got any cheese in the fridge?\nHusband: No, we haven’t. I’m _____ buy some this afternoon.",
+        answers: ["go", "go to", "going", "going to"],
+        correct: 3
+    },
+
+    {
+        question: "Laura: Where _____ you last Tuesday? I tried to phone you.\nBeatriz: Oh, I was visiting my grandmother. I didn’t have my phone with me.",
+        answers: ["were", "was", "are", "is"],
+        correct: 0
+    },
+
+    {
+        question: "Miriam: Are you coming to my party on Tuesday?\nBrian: I’m really sorry, but I _____ to take my daughter to the airport.",
+        answers: ["has", "had", "have", "having"],
+        correct: 2
+    },
+
+    {
+        question: "Saif: Why do you like running?\nIsabella: Because it’s _____ way to keep fit.",
+        answers: ["best", "better", "the best", "the better"],
+        correct: 2
+    },
+
+    {
+        question: "Anna: Have you lived here a long time?\nStefan: Yes, over 40 years. I know _____ of people in this town.",
+        answers: ["any", "lots", "more", "most"],
+        correct: 1
+    },
+
+    {
+        question: "Josef: Why didn’t you come to the cinema last week?\nChloe: I wanted to but I couldn’t. I _____ studying for that test we had on Monday.",
+        answers: ["was", "were", "am", "been"],
+        correct: 0
+    },
+
+    {
+        question: "Anna: That bird’s on the garden table again. I think it’s hungry.\nJuliana: Yes, look! It _____ eat the bread we put there.",
+        answers: ["is", "will", "goes to", "is going to"],
+        correct: 3
+    },
+
+    {
+        question: "Sophie: How long _____ married?\nYing Yue: Two years. I met my husband when I was working in New York.",
+        answers: ["had you got", "did you get", "have you been", "are you being"],
+        correct: 2
+    },
+
+    {
+        question: "David: Have you _____ that new film yet?\nSusanna: No, I haven’t. We could go on Thursday if you like?",
+        answers: ["see", "saw", "seen", "seeing"],
+        correct: 2
+    },
+
+    {
+        question: "Shop Assistant: Excuse me, please. Could I get past?\nCustomer: Oh, I’m sorry. I’m getting in the way, _____ I?",
+        answers: ["don’t", "aren’t", "can’t", "haven’t"],
+        correct: 1
+    },
+
+    {
+        question: "Wife: Advertising is a big business for musicians.\nHusband: Yes, musicians _____ a lot of money for writing short pieces of music.",
+        answers: ["pay", "paid", "are paid", "are paying"],
+        correct: 2
+    },
+
+    {
+        question: "Son: Mum, I’d really like a guitar. Can I have one?\nMother: OK, but if we buy one you _____ have to practise playing it.",
+        answers: ["will", "can", "could", "must"],
+        correct: 0
+    },
+
+    {
+        question: "Juliana: Do you like Brazilian coffee?\nMiriodere: No I don’t, because it’s _____ strong.",
+        answers: ["too", "such", "much", "enough"],
+        correct: 0
+    },
+
+    {
+        question: "Matthew: Would you like anything from the shop?\nAlicia: Yes, I’d like one of _____ celebrity magazines, please.",
+        answers: ["most recent", "more recent", "the most recent", "the more recent"],
+        correct: 2
+    },
+
+    {
+        question: "Daughter: Mum, my computer is broken again. I really need a new one.\nMother: I _____ buy one if we had the money, but it’s not possible right now.",
+        answers: ["will", "may", "should", "would"],
+        correct: 3
+    },
+
+    {
+        question: "Mother: _____ you packed your suitcase yet? We’re leaving early tomorrow morning.\nSon: I’ll do it later. It won’t take long.",
+        answers: ["Did", "Have", "Will", "Are"],
+        correct: 1
+    },
+
+    {
+        question: "Lucas: Do you play the piano, Natasha?\nNatasha: Well, I _____ play when I was younger, but I’m not sure I remember now.",
+        answers: ["can", "can’t", "could", "couldn’t"],
+        correct: 2
+    },
+
+    {
+        question: "Martina: What did the doctor say about your stomach pains?\nPadma: He asked me what I _____ for the last two days.",
+        answers: ["eat", "had eaten", "was eating", "would eat"],
+        correct: 1
+    },
+
+    {
+        question: "Daughter: Everyone has arrived apart from Pamela.\nMother: Don’t worry, she phoned me this morning and said she _____ be a bit late.",
+        answers: ["can", "must", "should", "would"],
+        correct: 3
+    },
+
+    {
+        question: "Vincent: Did you see the weather forecast? It’s going to be extremely hot this weekend.\nPauline: I know, I can’t believe it! It _____ since Monday.",
+        answers: ["rains", "has been raining", "is raining", "was raining"],
+        correct: 1
+    },
+
+    {
+        question: "Ameena: What colour are you going to paint the living room?\nCharlotte: I _____ probably choose something bright, like yellow.",
+        answers: ["will", "may", "can", "might"],
+        correct: 0
+    },
+
+    {
+        question: "Victor: I’d love to go back in history to see how people lived hundreds of years ago.\nSimon: Me too! If I _____ choose, I’d probably travel to ancient Rome.",
+        answers: ["can", "will", "could", "would"],
+        correct: 2
+    },
+
+    {
+        question: "Stephen: The concert was fantastic yesterday. You _____ have come.\nYuuto: I know. I wanted to, but I had to work late.",
+        answers: ["must", "could", "ought", "should"],
+        correct: 3
+    },
+
+    {
+        question: "Katie: Would you like to go sightseeing or to the beach this afternoon?\nMatthew: I don’t mind, I’ll let you decide.\nKatie: OK, let’s go sightseeing, _____ we?",
+        answers: ["should", "shall", "might", "would"],
+        correct: 1
+    },
+
+    {
+        question: "Amanda: It said on the news that the president also owns all the national newspapers.\nAndrew: That _____ be right! I don’t think that’s true.",
+        answers: ["must", "can’t", "won’t", "would"],
+        correct: 1
+    },
+
+    {
+        question: "Assistant: That meeting was really difficult. What would you have done if you _____ in my position?\nManager: Oh, I think you managed it very well.",
+        answers: ["are", "were", "had been", "would be"],
+        correct: 2
+    },
+
+    {
+        question: "Natalia: My new smartphone doesn’t seem to work.\nKatie: Oh dear! Perhaps you should take it _____ and ask for a refund.",
+        answers: ["up", "out", "away", "back"],
+        correct: 3
+    },
+
+    {
+        question: "Chris: I wish I could be with our cousins …\nAlison: Me too! By this time tomorrow they _____ on a Greek beach while we’re revising for our history test.",
+        answers: ["sunbathe", "will sunbathe", "will be sunbathing", "will have sunbathed"],
+        correct: 2
+    },
+
+    {
+        question: "Son: Are you OK, Mum? You don’t seem very relaxed.\nMother: I just wish I _____ an aisle seat so that I could get up and walk around more easily.",
+        answers: ["had chosen", "have chosen", "would choose", "should choose"],
+        correct: 0
+    },
+
+    {
+        question: "Nicola: I love this picture, but won’t it cost a fortune?\nVictor: No, it’s just a copy. The original _____, is a portrait of the artist’s friend, sold for €4 million!",
+        answers: ["whose", "which", "whom", "that"],
+        correct: 1
+    },
+
+    {
+        question: "Laura: I can’t believe how talented this artist was.\nEmily: I know, it’s amazing _____. he was almost 90 when he did them, his paintings are beautiful.",
+        answers: ["Since", "Besides", "Although", "Therefore"],
+        correct: 2
+    },
+
+    {
+        question: "Andrea: I want to buy some new shoes for the winter.\nShan: Well, I _____ looking for a new pair of boots for weeks, but I can’t find anything I like.",
+        answers: ["am", "was", "had been", "have been"],
+        correct: 3
+    },
+
+    {
+        question: "Client: I don’t have much money – just enough to _____ .\nAccountant: Well, let me suggest a way of helping you save more.",
+        answers: ["get by", "pay off", "do with", "make up"],
+        correct: 0
+    },
+
+    {
+        question: "Pablo: In April next year I _____ here for ten years exactly.\nAlison: Wow! It really doesn’t seem that long.",
+        answers: ["will live", "will be living", "am going to live", "will have been living"],
+        correct: 3
+    },
+
+    {
+        question: "Student: Is it true that it took Bell and Watson ages to invent the telephone?\nTeacher: Yes. When they finally succeeded, they _____ on it for about 30 years.",
+        answers: ["must work", "had been working", "have worked", "would be working"],
+        correct: 1
+    },
+
+    {
+        question: "Rachel: This would be a lovely place to sit on a dry day.\nNatasha: Yes, I know. I just wish the rain _____.",
+        answers: ["would stop", "has stopped", "will have stopped", "would be stopping"],
+        correct: 0
+    },
+
+    {
+        question: "Student: What’s today’s lesson going to be about?\nTeacher: Today we’re going to learn about a tribe _____ descendants live in Lima, the capital of Peru.",
+        answers: ["who", "which", "whose", "whom"],
+        correct: 2
+    },
+
+    {
+        question: "Andrea: Did your town have a good market?\nKatie: Yes. When I was young we _____ there every Saturday looking for bargains.",
+        answers: ["had gone", "would go", "were going", "had been going"],
+        correct: 1
+    },
+
+    {
+        question: "Daughter: Joanna has been really supportive. I’m so lucky to have her as a friend.\nMother: Yes. Just think – if you hadn’t sat next to her in class at school, you _____ so close now.",
+        answers: ["won’t be", "wouldn’t be", "wouldn’t have been", "aren’t"],
+        correct: 1
+    },
+
+    {
+        question: "David: Did you see the headline this evening?\nNicola: Yes – the Prime Minister was _____ to resign today.",
+        answers: ["charged", "argued", "struggled", "forced"],
+        correct: 3
+    },
+
+    {
+        question: "Student: I’m concerned about the chemical test results I’ve just had from the river.\nProfessor: It _____ be a good idea to check the acid levels as well then.",
+        answers: ["must", "should", "might", "ought"],
+        correct: 2
+    },
+
+    {
+        question: "Aamir: They’ve just announced that our train has been delayed.\nLaura: That’s annoying. We _____ have rushed to get here after all.",
+        answers: ["needn’t", "could", "should", "mustn’t"],
+        correct: 0
+    },
+
+    {
+        question: "Liam: So, your Dad’s got a laptop!\nCian: Yes, I bought it for him last year – until then he _____ a typewriter!",
+        answers: ["used", "has used", "has been using", "had been using"],
+        correct: 3
+    },
+
+    {
+        question: "Isabella: The flight is fully booked, so I won’t be able to go to Barbados next week.\nSafia: If you _____ the ticket sooner, you’d have found a seat.",
+        answers: ["had booked", "were booking", "booked", "would have booked"],
+        correct: 0
+    },
+
+    {
+        question: "Receptionist: You _____ taken a taxi to the hotel since you arrived so late.\nCustomer: It was OK, actually. There was a direct bus service from the airport.",
+        answers: ["will have", "should have", "might have", "would have"],
+        correct: 1
+    },
+
+    {
+        question: "Sophie: Have they finished interviewing for the manager’s position yet?\nRafi: No, but they _____ all the candidates by next Friday.",
+        answers: ["won’t see", "would see", "haven’t seen", "will have seen"],
+        correct: 3
+    },
+
+    {
+        question: "Athlete: _____ hard I try, I can’t run any faster.\nCoach: You’ve improved a lot. I wouldn’t worry about it.",
+        answers: ["Though", "Whereas", "However", "Considering"],
+        correct: 2
+    },
+
+    {
+        question: "Laura: That’s a really beautiful painting. The colours are so vivid.\nJeremy: Yes, it’s amazing to think it was lost for years and _____.",
+        answers: ["must be restored", "had to be restored", "has been restoring", "would be restoring"],
+        correct: 1
+    },
+
+    {
+        question: "Charlotte: I saw the photos from the film festival. Was that you with the actor from The Hobbit?\nNiall: Yes, it was! _____ did I imagine I would ever actually meet him.",
+        answers: ["Not", "Much", "Hardly", "Little"],
+        correct: 3
+    },
+
+    {
+        question: "Pauline: I hear you got soaked on the golf course this morning.\nChris: Yes. I wish I _____ listened to the weather forecast.",
+        answers: ["had", "have", "would have", "should have"],
+        correct: 0
+    },
+
+    {
+        question: "Laura: How was the meeting?\nRicardo: It finished late because Victor didn’t arrive until 5 pm. He told me he _____ been given the wrong directions.",
+        answers: ["has", "had", "should have", "would have"],
+        correct: 1
+    },
+
+    {
+        question: "Andrew: I picked up some of that cat food you wanted.\nPedro: Oh good. Once _____ to these new cat biscuits, they won’t want to go back to the other stuff.",
+        answers: ["we’ve switched", "we’ll be switching", "we’ll have switched", "we’ve been switched"],
+        correct: 0
+    },
+
+    {
+        question: "Antonia: Has your son done well in his exams?\nPhillip: Yes. Only once _____ he wasn’t sufficiently prepared, but he can take that one again.",
+        answers: ["he found", "he has found", "did he find", "could he find"],
+        correct: 2
+    },
+
+    {
+        question: "Son: I had a bit of a stomach ache this morning.\nMother: Oh dear! Well, I did say you _____ eaten that chicken last night.",
+        answers: ["wouldn’t have", "couldn’t have", "mustn’t have", "shouldn’t have"],
+        correct: 3
+    }
+
+];
+
+
+let currentQuestion = 0;
+let score = 0;
+let selectedAnswer = null;
+let studentName = "";
+
+
+function startTest() {
+
+    studentName =
+        document.getElementById("studentName").value.trim();
+
+    if (studentName === "") {
+        alert("Please enter your name.");
+        return;
+    }
+
+    currentQuestion = 0;
+    score = 0;
+    selectedAnswer = null;
+
+    document.getElementById("start").style.display = "none";
+    document.getElementById("result").style.display = "none";
+    document.getElementById("test").style.display = "block";
+
+    showQuestion();
+}
+
+
+function showQuestion() {
+
+    selectedAnswer = null;
+
+    const q = questions[currentQuestion];
+
+    document.getElementById("question").textContent =
+        (currentQuestion + 1) + ". " + q.question;
+
+    const answersDiv =
+        document.getElementById("answers");
+
+    answersDiv.innerHTML = "";
+
+    q.answers.forEach((answer, index) => {
+
+        const button =
+            document.createElement("button");
+
+        button.textContent =
+            String.fromCharCode(65 + index) + ". " + answer;
+
+        button.className = "answer-btn";
+
+        button.onclick = function() {
+
+            selectedAnswer = index;
+
+            const allButtons =
+                answersDiv.querySelectorAll(".answer-btn");
+
+            allButtons.forEach(btn => {
+                btn.classList.remove("selected");
+            });
+
+            button.classList.add("selected");
+
+        };
+
+        answersDiv.appendChild(button);
+
+    });
+
+
+    document.getElementById("progress").textContent =
+        "Question " +
+        (currentQuestion + 1) +
+        " of " +
+        questions.length;
+
+
+    const percentage =
+        ((currentQuestion + 1) / questions.length) * 100;
+
+    document.getElementById("progressBar").style.width =
+        percentage + "%";
+}
+
+
+function nextQuestion() {
+
+    if (selectedAnswer === null) {
+
+        alert("Please select an answer.");
+
+        return;
+    }
+
+    if (
+        selectedAnswer ===
+        questions[currentQuestion].correct
+    ) {
+        score++;
+    }
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+
+        showQuestion();
+
+    } else {
+
+        finishTest();
+
+    }
+}
+
+
+function skipQuestion() {
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+
+        showQuestion();
+
+    } else {
+
+        finishTest();
+
+    }
+}
+
+
+function finishTest() {
+
+    document.getElementById("test").style.display = "none";
+    document.getElementById("result").style.display = "block";
+
+    const percentage =
+        Math.round((score / questions.length) * 100);
+
+    let level = "";
+    let message = "";
+
+    if (score <= 6) {
+
+        level = "Beginner";
+
+        message =
+            "Focus on basic vocabulary and grammar. Keep practicing!";
+
+    } else if (score <= 20) {
+
+        level = "Elementary";
+
+        message =
+            "You have a good basic foundation. Keep improving your grammar and vocabulary!";
+
+    } else if (score <= 34) {
+
+        level = "Pre-Intermediate";
+
+        message =
+            "You have a solid foundation. Practice speaking and expand your vocabulary!";
+
+    } else if (score <= 48) {
+
+        level = "Intermediate";
+
+        message =
+            "Good job! You can communicate well, but there is still room to improve.";
+
+    } else if (score <= 62) {
+
+        level = "Upper-Intermediate";
+
+        message =
+            "Very good! You have a strong command of English.";
+
+    } else {
+
+        level = "Advanced";
+
+        message =
+            "Excellent! You have an advanced level of English.";
+
+    }
+
+
+    document.getElementById("result").innerHTML = `
+
+        <div class="result-card">
+
+            <div class="result-icon">
+                🎉
+            </div>
+
+            <h2>
+                Test Completed!
+            </h2>
+
+            <p class="result-subtitle">
+                Your English placement result
+            </p>
+
+            <p class="student-result">
+                ${studentName}
+            </p>
+
+            <div class="result-stats">
+
+                <div class="stat-box">
+
+                    <span class="stat-label">
+                        SCORE
+                    </span>
+
+                    <p class="score-number">
+                        ${score}/${questions.length}
+                    </p>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <span class="stat-label">
+                        PERCENTAGE
+                    </span>
+
+                    <p class="percentage">
+                        ${percentage}%
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="level-box">
+
+                <div class="level-label">
+                    YOUR ENGLISH LEVEL
+                </div>
+
+                <div class="level-badge">
+                    ${level}
+                </div>
+
+            </div>
+
+
+            <p class="level-message">
+                ${message}
+            </p>
+
+
+            <button
+                onclick="restartTest()"
+                class="restart-btn">
+                🔄 Take the Test Again
+            </button>
+
+        </div>
+
+    `;
+}
+
+
+function restartTest() {
+
+    currentQuestion = 0;
+    score = 0;
+    selectedAnswer = null;
+    studentName = "";
+
+    document.getElementById("result").style.display = "none";
+    document.getElementById("test").style.display = "none";
+    document.getElementById("start").style.display = "block";
+
+    document.getElementById("studentName").value = "";
+
+    document.getElementById("progressBar").style.width = "0%";
+}
+
+</script>
+
+</body>
+
+</html>
